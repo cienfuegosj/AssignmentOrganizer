@@ -9,7 +9,7 @@ from flask import *
 from flask_login import *
 from Model import Database
 from User import User
-import logging
+import logging, xmltodict
 
 
 app = Flask(__name__)
@@ -20,6 +20,9 @@ login_manager.init_app(app)
 login_manager.login = "login"
 
 # Database Management
+with open('cred.xml') as fd:
+    conn_cred = xmltodict.parse(fd.read())
+database = Database(conn_cred=conn_cred)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -28,6 +31,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         # Validate Credentials
+
     else:
         return render_template("index.html", title="Login | Organizer")
 

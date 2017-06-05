@@ -2,22 +2,22 @@ import pymysql.cursors
 import logging
 
 
-class __DBLoggerManager:
+class DBLoggerManager:
 
     def __init__(self):
         # Set Database Issues Logging
         self.__db_issues_logger = logging.Logger(name="Database Issues")
         self.__db_issues_logger.setLevel(logging.CRITICAL)
-        self.__issues_handler = logging.FileHandler("Database Errors.log")
+        self.__issues_handler = logging.FileHandler("logs/Database Errors.log")
         self.__issues_handler.setLevel(logging.CRITICAL)
-        self.__db_issues_logger.addHandler(self.issues_handler)
+        self.__db_issues_logger.addHandler(self.__issues_handler)
 
         # Set Database Queries Logging
         self.__db_queries_logger = logging.Logger(name="Database Queries")
         self.__db_queries_logger.setLevel(logging.INFO)
-        self.__queries_handler = logging.FileHandler("Database Queries.log")
+        self.__queries_handler = logging.FileHandler("logs/Database Queries.log")
         self.__queries_handler.setLevel(logging.INFO)
-        self.__db_queries_logger.addHandler(self.queries_handler)
+        self.__db_queries_logger.addHandler(self.__queries_handler)
 
     def getIssuesLogger(self):
         return self.__db_issues_logger
@@ -36,11 +36,11 @@ class Database:
 
         try:
             self.connection = pymysql.connect(
-                host=self.connection_cred['host'],
-                user=self.connection_cred['user'],
-                password=self.connection_cred['password'],
-                db=self.connection_cred['db'],
-                charset=self.connection_cred['charset'],
+                host=self.connection_cred['db_cred']['host'],
+                user=self.connection_cred['db_cred']['user'],
+                password=self.connection_cred['db_cred']['password'],
+                db=self.connection_cred['db_cred']['db'],
+                charset=self.connection_cred['db_cred']['charset'],
                 cursorclass=pymysql.cursors.DictCursor
             )
         except Exception as e:
@@ -70,4 +70,7 @@ class Database:
             self.issues_logger.log(
                 "Queried failed. Info: \n{0}".format(e.message)
             )
+
+    def __del__(self):
+        self.connection.close()
 
