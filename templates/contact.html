@@ -1,0 +1,32 @@
+{% extends 'meta_layout.html' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block panel_body %}
+<div class="row">
+    <div class="col-md-2">
+        <img src="{{ url_for('static',filename='images/user_placeholder.png') }}">
+    </div>
+    <div class="col-md-2">
+        <h4>Javier Cienfuegos Jr</h4>
+        <i>
+            B.A in Computer Science & Mathematics. Minor in Physics.
+            Music Enthusiast. Coffee Lover. Dreamer
+        </i>
+    </div>
+    <div class="col-md-2">
+        <img src="{{ url_for('static',filename='images/user_placeholder.png') }}">
+    </div>
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-2">
+        <img src="{{ url_for('static',filename='images/user_placeholder.png') }}">
+    </div>
+    <div class="col-md-2">
+
+    </div>
+</div>
+{% endblock %}

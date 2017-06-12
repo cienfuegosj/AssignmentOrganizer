@@ -1,0 +1,38 @@
+.panel-body {
+    height: calc(100vh - 125px);
+    overflow: auto;
+}
+
+.panel-footer {
+    text-align: center;
+}
+
+#usernameFormGroup {
+    padding-top: 3%;
+    padding-right: 2%;
+}
+
+#passwordFormGroup {
+    padding-top: 3%;
+}
+
+#cienfuegosj {
+  max-width:350px;
+  max-height:350px;
+  width: auto;
+  height: auto;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: white;
+}
+
+.panel-resizable {
+    resize: vertical;
+    overflow: auto;
+}
+
+.jumbotron:hover {
+    background-color: #EBEBEB;
+}

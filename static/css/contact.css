@@ -1,0 +1,17 @@
+.panel-body {
+    /* Height Calculation */
+    height: calc(100vh - 125px);
+}
+
+.panel-footer {
+    text-align: center;
+}
+
+#usernameFormGroup {
+    padding-top: 3%;
+    padding-right: 2%;
+}
+
+#passwordFormGroup {
+    padding-top: 3%;
+}

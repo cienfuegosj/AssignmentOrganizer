@@ -1,0 +1,42 @@
+{% extends 'meta_layout.html' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block panel_body %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="jumbotron">
+                <h2>What were we thinking?</h2>
+                <p>
+                    As developers, programmers, and software engineers, we strive to not only
+                    complete our programming assignments and designs, we want to be able to
+                    lead, manage, and receive feedback in order to make the product development
+                    process manageable.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="jumbotron">
+                <h2>Where did it start?</h2>
+                <p>
+                    Undergraduate studies in Computer Science, Software Engineering, Computer Engineering,
+                    and Electrical Engineering, assign a multitude of programming assignments to students.
+                    So along with version control applications i.e. GitHub, Bitbucket, etc., we wanted to provide
+                    a way to organize your assignments.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="jumbotron">
+                <h2>What makes this application different?</h2>
+                <p>
+                    The software engineering and development fields have different methods for keeping up
+                    with assignments, and we want students in undergraduate courses to experience the same
+                    type of organization that is expected in real world software development.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
