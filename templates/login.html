@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{ url_for('login') }}">Assignment Organizer</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="{{ url_for('login') }}">Home</a></li>
+      <li><a href="#">Documentation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+          <form>
+              <div class="form-group" id="usernameFormGroup">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+              </div>
+          </form>
+      </li>
+        <li>
+            <form>
+                <div class="form-group" id="passwordFormGroup">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+            </form>
+        </li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+      <div class="row">
+          <div class="col-md-6">
+            <div class="jumbotron">
+                <h1>Welcome!</h1>
+                <p>Get started organizing your tasks and assignments.</p>
+                <p>Collaborate with group/organization members to increase project productivity.</p>
+                <a href="#">Click here to create a new account.</a>
+            </div>
+          </div>
+          <div class="col-md-6"></div>
+      </div>
+  </div>
+  <div class="panel-footer">
+      <div class="row">
+          <div class="col-md-3">
+              <a href="https://github.com/cienfuegosj/AssignmentOrganizer">GitHub</a>
+          </div>
+          <div class="col-md-3">
+              <a href="{{ url_for('about') }}">About</a>
+          </div>
+          <div class="col-md-3">
+              <a href="#">Contact</a>
+          </div>
+          <div class="col-md-3">
+              <a href="https://github.com/cienfuegosj/AssignmentOrganizer/blob/master/LICENSE">License</a>
+          </div>
+      </div>
+  </div>
+</div>
+</html>
+

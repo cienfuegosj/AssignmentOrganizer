@@ -25,6 +25,7 @@ with open('cred.xml') as fd:
 database = Database(conn_cred=conn_cred)
 
 
+# View Routes
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -33,7 +34,21 @@ def login():
         # Validate Credentials
 
     else:
-        return render_template("index.html", title="Login | Organizer")
+        return render_template("login.html", title="Home | Organizer",
+                               active='home')
+
+
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html", title="About | Organizer")
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "GET":
+        return render_template("contact.html", title="Contact | Organizer")
+    else:
+        # Do any email contact things here
+        pass
 
 if __name__ == '__main__':
     app.run(debug=True)
