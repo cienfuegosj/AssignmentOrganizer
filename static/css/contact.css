@@ -1,6 +1,7 @@
 .panel-body {
     /* Height Calculation */
     height: calc(100vh - 125px);
+    overflow: auto;
 }
 
 .panel-footer {
@@ -8,10 +9,17 @@
 }
 
 #usernameFormGroup {
-    padding-top: 3%;
-    padding-right: 2%;
+    padding-top: 2%;
 }
 
 #passwordFormGroup {
-    padding-top: 3%;
+    padding-top: 2%;
+}
+
+#second_row {
+    margin-top: 5%;
+}
+
+#btn_login {
+    margin-top: 2%;
 }

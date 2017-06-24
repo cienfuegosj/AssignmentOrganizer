@@ -43,6 +43,7 @@ class Database:
                 charset=self.connection_cred['db_cred']['charset'],
                 cursorclass=pymysql.cursors.DictCursor
             )
+
         except Exception as e:
             self.issues_logger.log(
                 "Connection failed. Info: \n{0}".format(e.message)

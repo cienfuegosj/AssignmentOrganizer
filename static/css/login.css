@@ -1,10 +1,9 @@
 #usernameFormGroup {
-    padding-top: 3%;
-    padding-right: 2%;
+    padding-top: 2%;
 }
 
 #passwordFormGroup {
-    padding-top: 3%;
+    padding-top: 2%;
 }
 
 .panel-footer {
@@ -17,6 +16,10 @@
     background-size: cover;
     background-position: center;
     height: calc(100vh - 125px);
+}
+
+#btn_login {
+    margin-top: 2%;
 }
 
 .jumbotron {

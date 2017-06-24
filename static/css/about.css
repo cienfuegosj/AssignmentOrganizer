@@ -8,12 +8,15 @@
 }
 
 #usernameFormGroup {
-    padding-top: 3%;
-    padding-right: 2%;
+    padding-top: 2%;
 }
 
 #passwordFormGroup {
-    padding-top: 3%;
+    padding-top: 2%;
+}
+
+#btn_login {
+    margin-top: 2%;
 }
 
 #cienfuegosj {

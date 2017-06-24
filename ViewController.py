@@ -7,19 +7,19 @@
 
 from flask import *
 from flask_login import *
-from Model import Database
-from User import User
-import logging, xmltodict
+from model import Database
+from user import User
+import logging, xmltodict, json
 
 
 app = Flask(__name__)
 
-# Login Management
+# Login Management Objects
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login = "login"
 
-# Database Management
+# Database Management Objects
 with open('cred.xml') as fd:
     conn_cred = xmltodict.parse(fd.read())
 database = Database(conn_cred=conn_cred)
@@ -31,16 +31,19 @@ def login():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
-        # Validate Credentials
+
+        # Verify Credentials
+        q = "SELECT * FROM user_account_info WHERE username='{0}' AND password='{1}'".format(username, password)
+        database.query(q)
 
     else:
-        return render_template("login.html", title="Home | Organizer",
-                               active='home')
+        return render_template("login.html", title="Home | Organizer", active='home')
 
 
 @app.route("/about", methods=["GET"])
 def about():
     return render_template("about.html", title="About | Organizer")
+
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
