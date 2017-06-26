@@ -46,7 +46,7 @@ class Database:
 
         except Exception as e:
             self.issues_logger.log(
-                "Connection failed. Info: \n{0}".format(e.message)
+                logging.ERROR, "Connection failed. Info: \n{0}".format(e.message)
             )
 
     def insert(self, sql):
@@ -57,7 +57,7 @@ class Database:
             self.queries_logger.log("Queried OK")
         except Exception as e:
             self.issues_logger.log(
-                "Insertion failed. Info: \n{0}".format(e.message)
+                logging.ERROR, "Insertion failed. Info: \n{0}".format(e.message)
             )
 
     def query(self, sql):
@@ -69,7 +69,7 @@ class Database:
             return result
         except Exception as e:
             self.issues_logger.log(
-                "Queried failed. Info: \n{0}".format(e.message)
+                logging.ERROR, "Queried failed. Info: \n{0}".format(e.message)
             )
 
     def __del__(self):

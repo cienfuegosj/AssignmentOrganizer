@@ -52,7 +52,26 @@
                 <a href="#">Click here to create a new account.</a>
             </div>
           </div>
-          <div class="col-md-6"></div>
+          <div class="col-md-6">
+              <div class="row">
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6">
+                      {% if loginFailed %}
+                      <div class="well well-sm" id="login_error">
+                        Incorrect credentials. Please try again.
+                        <a href="#">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                        </div>
+                      <script>
+                          $(document).ready(function(){
+                                $("#login_error").fadeOut(5000);
+                          });
+                      </script>
+                        {% endif %}
+                  </div>
+              </div>
+          </div>
       </div>
   </div>
   <div class="panel-footer">
