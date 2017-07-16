@@ -16,9 +16,9 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $("#email").keyup(function() {
+    $("#reg_email").keyup(function() {
         var re = new RegExp(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
-        if (re.test($('#email').val()) && $.inArray($('#email').val(), invalidEmails) == -1){
+        if (re.test($('#reg_email').val()) && $.inArray($('#reg_email').val(), invalidEmails) == -1){
             if ($('#fg-email').hasClass('has-error')) {
                 $('#fg-email').removeClass('has-error');
                 $('#fg-email').children('span').remove();
@@ -121,8 +121,8 @@ validPasswordReenter = function() {
     }
 }
 
-accountValidation = function() {
-    $('.form-group').each(function(i, obj) {
+function accountValidation() {
+    var form_group_good = $('.form-group').each(function(i, obj) {
         if ($(this).hasClass('has-error')) {
             event.preventDefault();
             alert('Please the correct the highlighted information.');
@@ -130,4 +130,4 @@ accountValidation = function() {
         }
     });
     return true;
-};
+}

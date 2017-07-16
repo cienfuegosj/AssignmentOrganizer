@@ -1,5 +1,6 @@
 import pymysql.cursors
 import logging
+import datetime
 
 
 class DBLoggerManager:
@@ -26,6 +27,19 @@ class DBLoggerManager:
         return self.__db_queries_logger
 
 
+class EmailLogManager:
+    def __init__(self):
+        # Set Email Logging
+        self.__email_logger = logging.Logger(name="Email Logs")
+        self.__email_logger.setLevel(logging.INFO)
+        self.__email_handler = logging.FileHandler("logs/Email Transactions.log")
+        self.__email_handler.setLevel(logging.INFO)
+        self.__email_logger.addHandler(self.__email_handler)
+
+    def getEmailLogger(self):
+        return self.__email_logger
+
+
 class Database:
 
     def __init__(self, conn_cred):
@@ -43,10 +57,13 @@ class Database:
                 charset=self.connection_cred['db_cred']['charset'],
                 cursorclass=pymysql.cursors.DictCursor
             )
+            self.queries_logger.log(
+                logging.INFO, "Connected!"
+            )
 
         except Exception as e:
             self.issues_logger.log(
-                logging.ERROR, "Connection failed. Info: \n{0}".format(e.message)
+                logging.CRITICAL, "Connection failed. Info: \n{0}".format(e.message)
             )
 
     def insert(self, sql):
@@ -54,22 +71,26 @@ class Database:
             with self.connection.cursor() as cursor:
                 cursor.execute(sql)
                 self.connection.commit()
-            self.queries_logger.log("Queried OK")
+            self.queries_logger.log(
+                logging.INFO, "Queried OK")
+            return True
         except Exception as e:
             self.issues_logger.log(
-                logging.ERROR, "Insertion failed. Info: \n{0}".format(e.message)
+                logging.CRITICAL, "Insertion failed. Info: \n{0}".format(e.message)
             )
+            return False
 
     def query(self, sql):
         try:
             with self.connection.cursor() as cursor:
                 cursor.execute(sql)
                 result = cursor.fetchall()
-            self.queries_logger.log("Queried OK")
+            self.queries_logger.log(
+                logging.INFO, "Queried OK")
             return result
         except Exception as e:
             self.issues_logger.log(
-                logging.ERROR, "Queried failed. Info: \n{0}".format(e.message)
+                logging.CRITICAL, "Queried failed. Info: \n{0}".format(e.message)
             )
 
     def __del__(self):

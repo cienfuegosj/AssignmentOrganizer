@@ -9,7 +9,7 @@ class User(UserMixin):
         self.password = password
 
     def __repr__(self):
-        return "{0}:{1}".format(self.id, self.username)
+        return "{0}:{1}".format(self.id, self.email)
 
     def __str__(self):
-        return self.username
+        return self.email

@@ -1,1 +1,79 @@
 {% extends 'user_layout.html' %}
+
+{% block panel_body %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well" style="background: #ffffff">
+                <h2>Personal Assignments</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Due Date</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Math Department Website</b></td>
+                            <td>10/20/2018</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Digital Circuit Demultiplexer</td>
+                            <td>11/30/2018</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Web Server</td>
+                            <td>12/21/2019</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td><span class="glyphicon glyphicon-plus"></span> Add new assignment...</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-lg-6">
+            <div class="well" style="background: #ffffff">
+                <h2>Team Assignments</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Due Date</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Math Department Website</b></td>
+                            <td>10/20/2018</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Digital Circuit Demultiplexer</td>
+                            <td>11/30/2018</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Web Server</td>
+                            <td>12/21/2019</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td><span class="glyphicon glyphicon-plus"></span> Add new assignment...</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
