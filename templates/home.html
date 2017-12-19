@@ -1,11 +1,22 @@
 {% extends 'user_layout.html' %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/quill/dist/quill.snow.css')}}"/>
+<link rel="stylesheet" href="{{url_for( 'static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{{url_for( 'static', filename='bower_components/moment/min/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{url_for( 'static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{url_for( 'static', filename='node_modules/quill/dist/quill.min.js') }}"></script>
+{% endblock %}
+
 
 {% block panel_body %}
     <div class="row">
         <div class="col-lg-6">
             <div class="well" style="background: #ffffff">
                 <h2>Personal Assignments</h2>
-                <table class="table table-hover">
+                <table class="table table-hover" id="personal_table">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -14,35 +25,45 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><b>Math Department Website</b></td>
-                            <td>10/20/2018</td>
-                            <td>10</td>
+                        {% for pa in personal_assignments %}
+                        <tr id="personal_{{pa['PAID']}}">
+                            <td>{{ pa['title'] }}</td>
+                            <td>{{ pa['due_date'] }}</td>
+                            <td>{{ pa['priority'] }}</td>
                         </tr>
-                        <tr>
-                            <td>Digital Circuit Demultiplexer</td>
-                            <td>11/30/2018</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Web Server</td>
-                            <td>12/21/2019</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
+                        {% endfor %}
+                        <tr id="personal_new">
                             <td><span class="glyphicon glyphicon-plus"></span> Add new assignment...</td>
                             <td></td>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
+                <h2>Completed Personal Assignments</h2>
+                <table class="table table-hover" id="personal_table_completed">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Completed Date</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pa in personal_assignments_completed %}
+                        <tr id="completed_personal_{{pa['PAID']}}">
+                            <td>{{ pa['title'] }}</td>
+                            <td>{{ pa['due_date'] }}</td>
+                            <td>{{ pa['priority'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
         </div>
         <div class="col-lg-6">
             <div class="well" style="background: #ffffff">
                 <h2>Team Assignments</h2>
-                <table class="table table-hover">
+                <table class="table table-hover" id="team_table">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -51,29 +72,119 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><b>Math Department Website</b></td>
-                            <td>10/20/2018</td>
-                            <td>10</td>
+                        {% for ta in team_assignments %}
+                        <tr id="team_{{ta['TAID']}}">
+                            <td>{{ ta['title'] }}</td>
+                            <td>{{ ta['due_date']}}</td>
+                            <td>{{ ta['priority']}}</td>
                         </tr>
-                        <tr>
-                            <td>Digital Circuit Demultiplexer</td>
-                            <td>11/30/2018</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Web Server</td>
-                            <td>12/21/2019</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
+                        {% endfor %}
+                        <tr id="team_new">
                             <td><span class="glyphicon glyphicon-plus"></span> Add new assignment...</td>
                             <td></td>
                             <td></td>
                         </tr>
+                    </tbody>
+                </table>
+                <h2>Completed Team Assignments</h2>
+                <table class="table table-hover" id="completed_team_table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Due Date</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ta in team_assignments %}
+                        <tr id="completed_team_{{ta['TAID']}}">
+                            <td>{{ ta['title'] }}</td>
+                            <td>{{ ta['due_date']}}</td>
+                            <td>{{ ta['priority']}}</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <div id="add_personal_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Personal Assignment</h4>
+                </div>
+                <div class="modal-body">
+					<form>
+  						<div class="form-group">
+    						<label for="title">Title</label>
+    						<input  class="form-control" id="title">
+  						</div>
+  						<div class="form-group">
+    						<label for="description">Description</label>
+    						<input class="form-control" id="description">
+  						</div>
+                        <div class="form-group">
+                            <label for="due_date">Due Date</label>
+                            <div class='input-group date' id='due_date_calendar'>
+                                <input type='text' class="form-control" id="due_date">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="editor">
+
+                            </div>
+                        </div>
+  						<button type="submit" class="btn btn-default">Save</button>
+					</form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add_team_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Team Assignment</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#personal_new").on("click", function(event) {
+                $("#add_personal_modal").modal({keyboard: true});
+            });
+        });
+
+        $(document).ready(function() {
+            $("#team_new").on("click", function(event) {
+                $("#add_team_modal").modal({keyboard: true});;
+            });
+        });
+
+        $(function () {
+                $('#due_date_calendar').datetimepicker({
+                    minDate: moment()
+                });
+            });
+
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+    </script>
 {% endblock %}

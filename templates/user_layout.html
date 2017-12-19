@@ -8,6 +8,7 @@
     {% block stylesheets %}{% endblock%}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    {%block scripts %}{% endblock%}
 </head>
 
 <nav class="navbar navbar-inverse">
@@ -20,13 +21,14 @@
             <li><a href="#">Documentation</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <li><span class="glyphicon glyphicon-user"></span></li>
             <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="panel panel-default">
-    <div class="panel-body" style="background-color: #ffcccc">
+    <div class="panel-body">
         {% block panel_body %}
 
         {% endblock %}

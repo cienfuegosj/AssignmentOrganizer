@@ -7,14 +7,10 @@
 
 from datetime import date
 from flask import *
-from flask_login import *
-from flask_wtf import *
-from wtforms import *
-from wtforms.validators import *
-from model import Database, EmailLogManager
+from flask_login import LoginManager, login_user, login_required, logout_user
+from model import SQLDatabase, EmailLogManager, mongoDatabase
 from user import User
 from flask_mail import *
-from registrationform import RegistrationForm
 import logging, xmltodict, json
 
 
@@ -40,12 +36,18 @@ login_manager.init_app(app)
 login_manager.login = "login"
 
 # Database Management Objects
+databaseType = "SQL" # You may choose 'MongoDB' or 'MySQL'
 with open('cred.xml') as fd:
-    conn_cred = xmltodict.parse(fd.read())
-database = Database(conn_cred=conn_cred)
-
+    if databaseType == "SQL":
+        conn_cred = xmltodict.parse(fd.read())
+        database = SQLDatabase(conn_cred=conn_cred)
+    else:
+        conn_cred = "mongodb://cienfuegosj:Promagic1!@assignmentorganizer-shard-00-00-jefyg.mongodb.net:27017,assignmentorganizer-shard-00-01-jefyg.mongodb.net:27017,assignmentorganizer-shard-00-02-jefyg.mongodb.net:27017/admin?replicaSet=assignmentorganizer-shard-0&ssl=true"
+        database = mongoDatabase(conn_cred)
 
 # View Routes
+
+
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -59,7 +61,7 @@ def login():
         if results is not None and len(results) != 0:
             usr = User(results[0]['UID'], results[0]['email'], results[0]['password'])
             login_user(usr)
-            return redirect(url_for("user_dashboard"))
+            return redirect(url_for("user_dashboard", user=results[0]['UID']))
         else:
             return render_template("login.html", title="Home | Organizer", active="home", loginFailed=True)
 
@@ -135,10 +137,20 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/home", methods=["GET"])
+@app.errorhandler(401)
+def page_not_found(e):
+    return redirect(url_for('login'))
+
+
+@app.route("/home/<user>", methods=["GET"])
 @login_required
-def user_dashboard():
-    return render_template("home.html", title="Assignment Organizer", active="home")
+def user_dashboard(user):
+    q1 = "SELECT * FROM user_pers_assignments WHERE userid = '{0}';".format(user)
+    q2 = "SELECT * FROM team_assignments INNER JOIN team_members_map TM ON team_assignments.TAID = " \
+        "TM.team_assignment_id WHERE TM.team_assignment_id = '{0}'".format(user)
+    personal_assignments = database.query(q1)
+    team_assignments = database.query(q2)
+    return render_template("home.html", title="Assignment Organizer", active="home", personal_assignments=personal_assignments, team_assignments=team_assignments)
 
 
 @app.route("/about", methods=["GET"])

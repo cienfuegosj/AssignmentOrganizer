@@ -1,0 +1,26 @@
+{% extends 'meta_layout.html' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/email_confirmation.css') }}">
+{% endblock %}
+
+{% block panel_body %}
+    <div class=".well-lg">
+        <h1>Congratulations!</h1>
+        {% if successful %}
+        <strong>
+            Your account has being created and an e-mail has been sent
+            to the e-mail you have provided. We promise not to spam your e-mail,
+            but you will later have the ability to receive notifications
+            for team projects. Select <i>Home</i> to continue and log in.
+        </strong>
+        {% else %}
+        <strong>
+            Your account has being created but there was an error trying to send
+            you an e-mail. You <i>don't</i> need an e-mail, but it would make
+            team projects much easier if you had an e-mail for notifications.
+            Select <i>Home</i> to continue and log in.
+        </strong>
+        {% endif %}
+    </div>
+{% endblock %}

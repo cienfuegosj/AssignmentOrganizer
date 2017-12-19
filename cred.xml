@@ -1,0 +1,10 @@
+<cred>
+    <db_cred  version="0.1">
+        <host>127.0.0.1</host>
+        <user>root</user>
+        <password>promagic1</password>
+        <db>assignment_org</db>
+        <charset>utf8mb4</charset>
+        <cursorclass>pymysql.cursors.DictCursor</cursorclass>
+    </db_cred>
+</cred>

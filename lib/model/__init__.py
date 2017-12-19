@@ -1,5 +1,6 @@
 import pymysql.cursors
 import logging
+from pymongo import mongo_client
 import datetime
 
 
@@ -40,7 +41,32 @@ class EmailLogManager:
         return self.__email_logger
 
 
-class Database:
+class mongoDatabase:
+    """Under Construction until basic fundamentals of MongoDB are covered."""
+
+    def __init__(self, conn_cred):
+        """
+        Spins up the MongoDB Cluster with the credentials needed
+        @:conn_cred, an XML parsed object containing necessary attributes
+        """
+        self.loggerManager = DBLoggerManager()
+        self.issues_logger = self.loggerManager.getIssuesLogger()
+        self.queries_logger = self.loggerManager.getQueriesLogger()
+
+        try:
+            self.client = mongo_client.MongoClient(conn_cred)
+            self.queries_logger.log(
+                logging.INFO, "Connected!"
+            )
+            print("Connected")
+        except mongo_client.InvalidURI as e:
+            self.issues_logger.log(
+                logging.CRITICAL, "Connection failed. Info {0}".format(e.message)
+            )
+
+
+
+class SQLDatabase:
 
     def __init__(self, conn_cred):
         self.connection_cred = conn_cred
@@ -50,11 +76,11 @@ class Database:
 
         try:
             self.connection = pymysql.connect(
-                host=self.connection_cred['db_cred']['host'],
-                user=self.connection_cred['db_cred']['user'],
-                password=self.connection_cred['db_cred']['password'],
-                db=self.connection_cred['db_cred']['db'],
-                charset=self.connection_cred['db_cred']['charset'],
+                host=self.connection_cred['cred']['db_cred']['host'],
+                user=self.connection_cred['cred']['db_cred']['user'],
+                password=self.connection_cred['cred']['db_cred']['password'],
+                db=self.connection_cred['cred']['db_cred']['db'],
+                charset=self.connection_cred['cred']['db_cred']['charset'],
                 cursorclass=pymysql.cursors.DictCursor
             )
             self.queries_logger.log(
